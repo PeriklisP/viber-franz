@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  viber:
+
+    build: .
+    container_name: viber
+    privileged: true
+    restart: always
+    volumes:
+      - ./viberdata:/home/user
+    ports:
+      - 9981:9000

@@ -1,41 +1,37 @@
-# docker-novnc
+# Franz Viber Plugin
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/oott123/novnc.svg)](https://hub.docker.com/r/oott123/novnc/) [![Docker Automated build](https://img.shields.io/docker/automated/oott123/novnc.svg)](https://hub.docker.com/r/oott123/novnc/)
+This is a plugin for the Franz messenger app that wraps Viber inside a docker container, published via novnc.
 
-tigervnc, websokify, novnc and Nginx with s6-overlay in a docker image.
+_(In simple terms think of this as a "web based" Viber...)_
 
-## Environment variables
+-------------------
 
-* **`VNC_GEOMETRY`** - VNC geometry; default: `800x600`
-* **`VNC_PASSWD`** - VNC password, no more than 8 chars; default: `MAX8char`
-* **`USER_PASSWD`** - user `user` password. If you specify it, it will change the password for user `user` and add it to sudoers. NOTE: This password can get by programs so it's not safe. default: _(blank)_
+To get up and running you will need to:
 
-## Ports
+ 1. Install [Docker](https://www.docker.com/) (on your machine, or a server somewhere that will "publish" your Viber application)...
+ 2. Install [Docker Compose](https://docs.docker.com/compose/install/) - Pretty straightforward, follow the instructions...
+ 3. Configure & start the Viber container...
+ 4. Install the Viber plugin to Franz.
 
-* **5911** - tigervnc
-* **9000** - Nginx
-* **9001** - websockify
+### Configuring & Starting Viber Container
 
-## Add your foreground process
+This is fairly straightforward, just run the following commands from the `viber-docker` directory:
 
-`vncmain.sh` is a file which is a placeholder for foreground process running in VNC.
-
-You can write a Dockerfile like this:
-
-```Dockerfile
-FROM oott123/novnc:latest
-COPY vncmain.sh /app/vncmain.sh
+```
+docker-compose up --build -d
 ```
 
-And add foreground commands in your `vncmain.sh`:
+By default the container will auto-start when Docker starts (so if you restart your computer, it will come back automatically).
 
-```bash
-#!/bin/bash
-# Set them to empty is NOT SECURE but avoid them display in random logs.
-export VNC_PASSWD=''
-export USER_PASSWD=''
+### Install plugin to Franz
 
-xterm
-```
+Please see the [franz-plugin/readme](franz-plugin/readme.md) file for instructions on installing and enabling the Viber Plugin within Franz.
 
-Then build and run your docker image. That's it!
+### Moving Files/Directories?
+
+If you move this project's files around after you have stood up the docker container, you will need to: `docker-compose down && docker-compose up -d` the _viber-docker_ directory again.
+
+### Future Improvements
+- There's currently no notifications hooked into Franz - We might be able to do this by monitor any signal sent via libpulse and assume it's a Notification? 
+
+- Map audio through to Host Client from Libpulse (See: https://github.com/novnc/noVNC/issues/302)

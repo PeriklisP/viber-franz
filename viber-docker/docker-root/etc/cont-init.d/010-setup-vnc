@@ -4,7 +4,8 @@ set -eo pipefail
 
 [[ $DEBUG == true ]] && set -x
 
-echo -e "$VNC_PASSWD\n$VNC_PASSWD\n\n" | sudo -Hu user vncpasswd
+export VNC_PASSWD="viber-franz"
+echo -e "$VNC_PASSWD\n$VNC_PASSWD\n\n" | sudo -Hu user vncpasswd || true
 if [ ! -d /etc/vnc ]; then
     mkdir /etc/vnc
 fi
