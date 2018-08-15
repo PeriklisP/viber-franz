@@ -6,6 +6,10 @@ _(In simple terms think of this as a "web based" Viber...)_
 
 -------------------
 
+![Screenshot](franz-plugin/screenshot.jpg)
+
+### Steps to get started:
+
 To get up and running you will need to:
 
  1. Install [Docker](https://www.docker.com/) (on your machine, or a server somewhere that will "publish" your Viber application)...
