@@ -1,8 +1,8 @@
 # Franz Viber Plugin
 
-This is a plugin for the Franz messenger app that wraps Viber inside a docker container, published via novnc.
+This is a plugin for the [Franz Messaging App](https://meetfranz.com/) that wraps Viber inside a docker container, published via novnc.
 
-_(In simple terms think of this as a "web based" Viber...)_
+_(In simple terms think of this as a "web based" Viber wrapper...)_
 
 -------------------
 
@@ -34,6 +34,13 @@ Please see the [franz-plugin/readme](franz-plugin/readme.md) file for instructio
 ### Moving Files/Directories?
 
 If you move this project's files around after you have stood up the docker container, you will need to: `docker-compose down && docker-compose up -d` the _viber-docker_ directory again.
+
+### Publishing the Viber Server on the web (web based Viber)
+
+If you want to run just the docker container on the web (to publish Viber as if it was a Web Based Chat app) I suggest you put a service such as [Caddy](https://caddyserver.com/) in-front of the service to provide a free SSL certificate (via Lets Encrypt) - You will also want to change the default VNC password in `viber-docker/docker-root/etc/cont-init.d/10-setup-vnc` to something unique and secure.
+
+You may then access the service via your favourite browser like so:
+`https://<your-viber-server>/?autoconnect=true&reconnect=true&resize=remote&reconnect_delay=1000`
 
 ### Future Improvements
 - There's currently no notifications hooked into Franz - We might be able to do this by monitor any signal sent via libpulse and assume it's a Notification? 
